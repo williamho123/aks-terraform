@@ -1,0 +1,26 @@
+name: "Run Terraform"
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  apply:
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+    container: "hashicorp/terraform:1.0.10"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Apply Changes for Cluster
+        run: |
+          terraform init
+          terraform apply -auto-approve
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}

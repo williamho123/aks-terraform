@@ -5,13 +5,14 @@ terraform {
       version = "=2.84.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "storage-resources"
+    storage_account_name = "testsaeastus"
+    container_name       = "tfstatefiles"
+    key                  = "aks-cluster.tfstate"
+  }
 }
 
 provider "azurerm" {
   features {}
-}
-
-resource "azurerm_resource_group" "aks_resource_group" {
-  name     = "${var.prefix}-aks-resources"
-  location = var.location
 }

@@ -1,3 +1,8 @@
+resource "azurerm_resource_group" "aks_resource_group" {
+  name     = "${var.prefix}-aks-resources"
+  location = var.location
+}
+
 resource "azurerm_kubernetes_cluster" "cluster" {
   name                = "${var.prefix}-aks"
   location            = var.location
@@ -5,12 +10,14 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   dns_prefix          = "${var.prefix}-aks"
 
   default_node_pool {
-    name               = "default"
-    node_count         = 2
-    min_count          = 2
-    max_count          = 5
-    vm_size            = "Standard_D2_v2"
-    availability_zones = [1, 2, 3]
+    name                  = "default"
+    node_count            = 2
+    min_count             = 2
+    max_count             = 4
+    vm_size               = "Standard_D2_v2"
+    availability_zones    = [1, 2, 3]
+    enable_auto_scaling   = true
+    enable_node_public_ip = true
   }
 
   identity {
@@ -21,9 +28,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     network_plugin    = "kubenet"
     load_balancer_sku = "Standard"
   }
-}
 
-data "azurerm_public_ip" "example" {
-  name                = reverse(split("/", tolist(azurerm_kubernetes_cluster.cluster.network_profile.0.load_balancer_profile.0.effective_outbound_ips)[0]))[0]
-  resource_group_name = azurerm_kubernetes_cluster.cluster.node_resource_group
+  addon_profile {
+      http_application_routing {
+        enabled = true
+      }
+  }
 }
