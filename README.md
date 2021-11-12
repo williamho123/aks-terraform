@@ -25,7 +25,7 @@ $ terraform apply
 
 2. Using a service principal and storage account access key
 ```bash
-#
+# Set the service principal details
 $ export ARM_CLIENT_ID={SP_application_id}
 $ export ARM_CLIENT_SECRET={SP_client_secret}
 $ export ARM_SUBSCRIPTION_ID={SP_subscription_id}
