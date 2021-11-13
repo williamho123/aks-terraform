@@ -38,3 +38,14 @@ $ export ARM_ACCESS_KEY={SA_access_key}
 $ terraform init
 $ terraform apply
 ```
+
+## Destroying
+
+To destroy the cluster, you will need to run the commands locally.
+```bash
+# First, authenticate with Azure using one of the two methods above
+
+# Run the Terraform
+$ terraform init
+$ terraform destroy
+```
