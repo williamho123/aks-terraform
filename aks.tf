@@ -11,8 +11,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   default_node_pool {
     name                  = "default"
-    node_count            = 1
-    min_count             = 1
+    node_count            = 2
+    min_count             = 2
     max_count             = 3
     vm_size               = "Standard_D2_v2"
     availability_zones    = [1, 2, 3]
