@@ -13,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     name                  = "default"
     node_count            = 2
     min_count             = 2
-    max_count             = 3
+    max_count             = 4
     vm_size               = "Standard_D2_v2"
     availability_zones    = [1, 2, 3]
     enable_auto_scaling   = true
